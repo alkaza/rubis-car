@@ -1,2 +1,2 @@
-# Autonomous-Scaled-Down-Car
-RUBIS Scaled-down Self-driving Car Project
+# rubis-car
+RUBIS Scaled-down Self-driving Car
