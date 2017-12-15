@@ -65,6 +65,8 @@ echo $ROS_PACKAGE_PATH
 sudo apt-get install ros-indigo-angles
 sudo apt-get install ros-indigo-rosserial-arduino
 sudo apt-get install ros-indigo-rosserial
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
+rostopic echo chatter
 ```
 #### teleop_twist_keyboard
 ```
@@ -87,22 +89,12 @@ tar -xvf arduino-1.8.5-linuxarm.tgz
 cd arduino-1.8.5
 ./install.sh
 ```
-### Install Arduino Due package
-* Arduino IDE -> Tools -> Board -> Boards Manager
-* Arduino SAM Boards (32-bits ARM Cortex-M3)
+
 ### Install ros_lib
 ```
 cd ~/Arduino/libraries
 rm -rf ros_lib
 rosrun rosserial_arduino make_libraries.py .
-```
-### Test "Hello World" example
-* http://wiki.ros.org/rosserial_arduino/Tutorials/Hello%20World
-* http://wiki.ros.org/rosserial_arduino/Tutorials/NodeHandle%20and%20ArduinoHardware
-```
-roscore
-rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
-rostopic echo chatter
 ```
 
 # Network setup
