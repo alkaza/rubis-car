@@ -72,7 +72,7 @@ void messageDrive( const race::drive_values& pwm ) {
 
 void messageEmergencyStop( const std_msgs::Bool& flag ) {
   flagStop = flag.data;
-  if ((flagStop == true && (controller.isConnected()) {
+  if ((flagStop == true) && controller.isConnected()) {
     controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
     steering.write(pwm_angle_center_value);
   }
@@ -91,7 +91,7 @@ void setup() {
     steering.write(pwm_angle_center_value);
   }
 
-  analogWriteResolution(16);
+  //  analogWriteResolution(16);
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
   pinMode(2, INPUT);
@@ -108,7 +108,7 @@ void loop() {
   nh.spinOnce();
   duration = pulseIn(kill_pin, HIGH, 30000);
 
-  while ((duration > 1900) && (controller.isConnected()) {
+  while ((duration > 1900) && controller.isConnected()) {
     duration = pulseIn(kill_pin, HIGH, 30000);
     controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
     steering.write(pwm_angle_center_value);
