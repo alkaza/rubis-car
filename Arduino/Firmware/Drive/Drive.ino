@@ -21,8 +21,8 @@ int pwm_drive_center_value = 0;  //  15% duty cycle
 int pwm_drive_lowerlimit = -1000;    //  10% duty cycle
 int pwm_drive_upperlimit = 1000;   //  20% duty cycle
 
-Servo steering;
 RobotEQ controller(&Serial3);
+Servo steering;
 
 std_msgs::Int32 str_msg;
 ros::Publisher chatter("chatter", &str_msg);
@@ -85,13 +85,13 @@ ros::Subscriber<std_msgs::Bool> sub_stop("eStop", &messageEmergencyStop );
 
 void setup() {
   Serial3.begin(115200);
-
+  steering.attach(8);
+  
   if (controller.isConnected()) {
     controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
     steering.write(pwm_angle_center_value);
   }
 
-  //  analogWriteResolution(16);
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
   pinMode(2, INPUT);
