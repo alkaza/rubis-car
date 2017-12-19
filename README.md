@@ -1,3 +1,25 @@
+# Guidelines
+```
+git clone https://github.com/alkaza/rubis-car
+
+cp -avr ~/rubis-car/race ~/catkin_ws/src
+
+cd ~/catkin_ws 
+catkin_make
+source devel/setup.bash
+
+cp -avr ~/rubis-car/Arduino/Firmware/Libraries/RobotEQ ~/Arduino/libraries
+
+cd ~/Arduino/libraries
+rm -rf ros_lib
+rosrun rosserial_arduino make_libraries.py .
+
+roscore
+rosrun race talker.py
+rosrun rosserial_pythin serial_node.py /dev/ttyACM0
+rosrun race keyboard.py
+```
+
 # Install L4T 21.3 (from host PC)
 ## Download L4T 21.3 release package and sample file system from
 ```
@@ -68,7 +90,7 @@ sudo apt-get install ros-indigo-rosserial
 rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
 rostopic echo chatter
 ```
-#### teleop_twist_keyboard
+#### teleop_twist_keyboard (optional)
 ```
 sudo apt-get install ros-indigo-teleop-twist-keyboard
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
@@ -90,7 +112,7 @@ cd arduino-1.8.5
 ./install.sh
 ```
 
-### Install ros_lib
+### Setup ros_lib
 ```
 cd ~/Arduino/libraries
 rm -rf ros_lib
