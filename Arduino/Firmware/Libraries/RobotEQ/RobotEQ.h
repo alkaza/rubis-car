@@ -28,11 +28,13 @@
 // http://playground.arduino.cc/Code/Logging 
 
 // Note: Uncomment this to enable debug logging
+/*
 #define ROBOTEQ_DEBUG
 #ifdef ROBOTEQ_DEBUG
     #include "Logging.h"
     #define LOGLEVEL LOG_LEVEL_DEBUG
 #endif
+*/
 
 #define ROBOTEQ_DEFAULT_TIMEOUT     1000
 #define ROBOTEQ_BUFFER_SIZE         64
