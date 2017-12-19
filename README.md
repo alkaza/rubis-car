@@ -4,9 +4,10 @@ git clone https://github.com/alkaza/rubis-car
 
 cp -avr ~/rubis-car/race ~/catkin_ws/src
 
-cd ~/catkin_ws 
-catkin_make
+cd ~/catkin_ws
+catkin_make race
 source devel/setup.bash
+catkin_make
 
 cp -avr ~/rubis-car/Arduino/Firmware/Libraries/RobotEQ ~/Arduino/libraries
 
@@ -16,7 +17,7 @@ rosrun rosserial_arduino make_libraries.py .
 
 roscore
 rosrun race talker.py
-rosrun rosserial_pythin serial_node.py /dev/ttyACM0
+rosrun rosserial_python serial_node.py /dev/ttyACM0
 rosrun race keyboard.py
 ```
 
