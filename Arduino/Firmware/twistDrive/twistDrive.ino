@@ -70,7 +70,7 @@ void twistMsgDrive ( const geometry_msgs::Twist& twistMsg )
   }
 
   // Check to make sure throttle command is within bounds
-  if(motor_command > min_throttle)
+  if(motor_command < min_throttle)
   {
     motor_command = min_throttle;	//  Safety lower limit  
   }
@@ -111,5 +111,5 @@ void setup() {
 
 void loop() {
   nh.spinOnce();
-  delay(10);
+  delay(1);
 }
