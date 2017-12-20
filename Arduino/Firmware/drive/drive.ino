@@ -36,43 +36,41 @@ void messageDrive( const race::drive_values& pwm ) {
   //  Serial.print("Pwm angle : ");
   //  Serial.println(pwm.pwm_angle);
 
-  if (controller.isConnected()) {
-    if (flagStop == false) {
-      str_msg.data = pwm.pwm_drive;
-      chatter.publish( &str_msg );
+  if (flagStop == false) {
+    str_msg.data = pwm.pwm_drive;
+    chatter.publish( &str_msg );
 
-      if (pwm.pwm_drive < pwm_drive_lowerlimit) {
-        controller.commandMotorPower(CHANNEL_1, pwm_drive_lowerlimit);    //  Safety lower limit
-      }
-      else if (pwm.pwm_drive > pwm_drive_upperlimit) {
-        controller.commandMotorPower(CHANNEL_1, pwm_drive_upperlimit);	//  Safety upper limit
-      }
-      else {
-        controller.commandMotorPower(CHANNEL_1, pwm.pwm_drive);	//  Incoming data
-      }
-
-
-      if (pwm.pwm_angle < pwm_angle_lowerlimit) {
-        steering.write(pwm_angle_lowerlimit);    //  Safety lower limit
-      }
-      else if (pwm.pwm_angle > pwm_angle_upperlimit) {
-        steering.write(pwm_angle_upperlimit);    //  Safety upper limit
-      }
-      else {
-        steering.write(pwm.pwm_angle);	//  Incoming data
-      }
-
+    if (pwm.pwm_drive < pwm_drive_lowerlimit) {
+      controller.commandMotorPower(CHANNEL_1, pwm_drive_lowerlimit);    //  Safety lower limit
+    }
+    else if (pwm.pwm_drive > pwm_drive_upperlimit) {
+      controller.commandMotorPower(CHANNEL_1, pwm_drive_upperlimit);	//  Safety upper limit
     }
     else {
-      controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
-      steering.write(pwm_angle_center_value);
+      controller.commandMotorPower(CHANNEL_1, pwm.pwm_drive);	//  Incoming data
     }
+
+
+    if (pwm.pwm_angle < pwm_angle_lowerlimit) {
+      steering.write(pwm_angle_lowerlimit);    //  Safety lower limit
+    }
+    else if (pwm.pwm_angle > pwm_angle_upperlimit) {
+      steering.write(pwm_angle_upperlimit);    //  Safety upper limit
+    }
+    else {
+      steering.write(pwm.pwm_angle);	//  Incoming data
+    }
+
+  }
+  else {
+    controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
+    steering.write(pwm_angle_center_value);
   }
 }
 
 void messageEmergencyStop( const std_msgs::Bool& flag ) {
   flagStop = flag.data;
-  if ((flagStop == true) && controller.isConnected()) {
+  if (flagStop == true) {
     controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
     steering.write(pwm_angle_center_value);
   }
@@ -84,13 +82,12 @@ ros::Subscriber<std_msgs::Bool> sub_stop("eStop", &messageEmergencyStop );
 
 
 void setup() {
+  Serial.begin(57600);
   Serial3.begin(115200);
   steering.attach(8);
-  
-  if (controller.isConnected()) {
-    controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
-    steering.write(pwm_angle_center_value);
-  }
+
+  steering.write(pwm_angle_center_value);
+  controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
 
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
@@ -108,14 +105,14 @@ void loop() {
   nh.spinOnce();
   duration = pulseIn(kill_pin, HIGH, 30000);
 
-  while ((duration > 1900) && controller.isConnected()) {
+  while (duration > 1900) {
     duration = pulseIn(kill_pin, HIGH, 30000);
     controller.commandMotorPower(CHANNEL_1, pwm_drive_center_value);
     steering.write(pwm_angle_center_value);
   }
 
   /*
-    if(Serial.available() && (controller.isConnected())
+    if(Serial.available())
     {
     int spd = Serial.read();
     if(spd>127) {
