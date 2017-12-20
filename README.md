@@ -1,20 +1,12 @@
 # Guidelines
+## Get source code
 ```
 git clone https://github.com/alkaza/rubis-car
-
 cp -avr ~/rubis-car/race ~/catkin_ws/src
-
-cd ~/catkin_ws
-catkin_make race
-source devel/setup.bash
-catkin_make
-
-cp -avr ~/rubis-car/Arduino/Firmware/Libraries/RobotEQ ~/Arduino/libraries
-
-cd ~/Arduino/libraries
-rm -rf ros_lib
-rosrun rosserial_arduino make_libraries.py .
-
+cp -avr ~/rubis-car/Arduino/Firmware/libraries/RobotEQ ~/Arduino/libraries
+```
+## Run source code
+```
 roscore
 rosrun race talker.py
 rosrun rosserial_python serial_node.py /dev/ttyACM0
@@ -88,7 +80,7 @@ echo $ROS_PACKAGE_PATH
 sudo apt-get install ros-indigo-angles
 sudo apt-get install ros-indigo-rosserial-arduino
 sudo apt-get install ros-indigo-rosserial
-rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=57600
 rostopic echo chatter
 ```
 #### teleop_twist_keyboard (optional)
@@ -115,6 +107,10 @@ cd arduino-1.8.5
 
 ### Setup ros_lib
 ```
+cd ~/catkin_ws
+catkin_make race
+source devel/setup.bash
+catkin_make
 cd ~/Arduino/libraries
 rm -rf ros_lib
 rosrun rosserial_arduino make_libraries.py .
