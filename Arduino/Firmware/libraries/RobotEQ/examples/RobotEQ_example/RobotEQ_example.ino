@@ -3,10 +3,10 @@
 #define CHANNEL_1 1
 
 // Configure Motor Controllers
-RobotEQ controller(&Serial);
+RobotEQ controller(&Serial3);
 
 void setup() {
-    Serial.begin(115200);
+    Serial3.begin(115200);
 }
 
 void loop() {
@@ -17,6 +17,6 @@ void loop() {
         voltage = controller.queryBatteryVoltage();
         amps = controller.queryBatteryAmps();
 
-        controller.commandMotorPower(CHANNEL_1, 1000);
+        controller.commandMotorPower(CHANNEL_1, 500);
     }
 }
