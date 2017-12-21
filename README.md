@@ -5,12 +5,23 @@ git clone https://github.com/alkaza/rubis-car
 cp -avr ~/rubis-car/race ~/catkin_ws/src
 cp -avr ~/rubis-car/Arduino/Firmware/libraries/RobotEQ ~/Arduino/libraries
 ```
-## Run source code
+## Launch keyboard control
 ```
 roscore
 rosrun race talker.py
 rosrun rosserial_python serial_node.py /dev/ttyACM0
 rosrun race keyboard.py
+rosrun race kill.py
+```
+## Launch driving straight
+```
+roscore
+rosrun urg_node urg_node _ip_address:=192.168.1.11
+rosrun race talker.py
+rosrun rosserial_python serial_node.py /dev/ttyACM0
+rosrun race control.py
+rosrun race dist_finder.py
+rosrun race kill.py
 ```
 
 # Install L4T 21.3 (from host PC)
