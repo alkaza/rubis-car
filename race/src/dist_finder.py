@@ -9,8 +9,8 @@ from drive_straight.msg import pid_input
 # DESIRED_TRAJECTORY = 1
 # vel = 30
 
-DESIRED_TRAJECTORY = 1.2 # 301 Hallway width => 2.4m
-vel = 5
+DESIRED_TRAJECTORY = 1.2 # 301 Hallway width is 2.4m
+vel = -30
 
 pub = rospy.Publisher('error', pid_input, queue_size=10)
 
