@@ -19,8 +19,8 @@ ros::NodeHandle  nh;
 
 // General bounds for the steering servo
 const int center_steering = 90;
-const int min_steering = 0;
-const int max_steering = 180;
+const int min_steering = 30;
+const int max_steering = 150;
 
 // RobotEQ motor controller
 const int center_throttle = 0;
