@@ -5,11 +5,11 @@ from drive_straight.msg import drive_param
 from drive_straight.msg import pid_input
 
 # All needs to be modified later.
-kp = 14.0
+kp = 15.0
 kd = 0.09
-servo_offset = 18.5	# zero correction offset in case servo is misaligned.
+servo_offset = 0.0	# zero correction offset in case servo is misaligned.
 prev_error = 0.0
-vel_input = 25.0
+vel_input = -25.0
 
 pub = rospy.Publisher('drive_parameters', drive_param, queue_size=1)
 
@@ -26,7 +26,7 @@ def control(data):
     pid_error = data.pid_error
     error_p = pid_error * kp
     error_d = kd * (prev_error - pid_error)
-    angle = error_p + error_d
+    angle = -(error_p + error_d)
 
 
     prev_error = pid_error
