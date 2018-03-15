@@ -39,6 +39,8 @@ cd ../
 sudo ./apply_binaries.sh
 ```
 ## Flash the rootfs onto the system's internal eMMC.
+* Put your system into "reset recovery mode" by holding down the RECOVERY button and press RESET button once on the main board.
+* Ensure your Linux host system is connected to the target device through the USB cable for flashing.
 ```
 sudo ./flash.sh jetson-tk1 mmcblk0p1
 ```
