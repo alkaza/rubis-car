@@ -131,6 +131,7 @@ rosrun rosserial_arduino make_libraries.py .
 
 # Network setup
 ## Hokuyo 
+_Note: device IP 192.168.1.11_ 
 ```
 Method: Manual
 Connection Name: Hokuyo
@@ -145,7 +146,7 @@ sudo gedit ~/.bashrc
 ```
 ### Add lines:
 ```
-export ROS_IP=192.168.0.206
+export ROS_IP={Jetson TK1 IP}
 ```
 ### To revert this, replace it back by:
 ```
@@ -157,7 +158,7 @@ sudo gedit /etc/hosts
 ```
 ### Add the line:
 ```
-192.168.1.160 alena
+{Remote system IP} {User name}
 ```
 ## Remote system
 ### Open ~/.bashrc
@@ -166,9 +167,10 @@ sudo gedit ~/.bashrc
 ```
 ### Add lines:
 ```
-export ROS_MASTER_URI=http://192.168.0.206:11311
-export ROS_IP=192.168.0.160
+export ROS_MASTER_URI=http://{Jetson TK1 IP}:11311
+export ROS_IP={Remote system IP}
 ```
+_Note: only run roscore on Jetson TK1_
 ### To revert this, replace it back by:
 ```
 export ROS_HOSTNAME=localhost
@@ -180,5 +182,5 @@ sudo gedit /etc/hosts
 ```
 ### Add the line:
 ```
-192.168.1.206 ubuntu
+{Jetson TK1 IP} {User name}
 ```
